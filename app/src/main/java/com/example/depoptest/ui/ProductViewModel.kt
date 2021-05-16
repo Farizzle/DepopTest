@@ -1,10 +1,6 @@
 package com.example.depoptest.ui
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -36,7 +32,7 @@ class ProductViewModel @ViewModelInject constructor(
 
     private var _currentProduct = MutableLiveData<Product?>()
     val currentProduct: LiveData<Product?>
-    get() = _currentProduct
+        get() = _currentProduct
 
     init {
         getLatestProducts()
@@ -53,7 +49,7 @@ class ProductViewModel @ViewModelInject constructor(
     private suspend fun safeLatestProductsCall(offsetId: Int) {
         _productsStatus.value = Event(Resource.loading(null))
         try {
-            if (hasInternetConnection(app)){
+            if (hasInternetConnection(app)) {
                 val response = repository.getLatestPopularProducts(offsetId)
                 response.data?.let { safeResponse ->
                     saveProducts(*safeResponse.objects.asDatabaseModel())
@@ -64,7 +60,7 @@ class ProductViewModel @ViewModelInject constructor(
                 _productsStatus.postValue(Event(Resource.error("No internet connection")))
             }
         } catch (t: Throwable) {
-            when(t) {
+            when (t) {
                 is IOException -> _productsStatus.postValue(Event(Resource.error("Network Failure")))
                 else -> _productsStatus.postValue(Event(Resource.error("Conversion Failure")))
             }
@@ -75,9 +71,8 @@ class ProductViewModel @ViewModelInject constructor(
         _currentProduct.value = product
     }
 
-    fun removeCurrentProduct(){
+    fun removeCurrentProduct() {
         _currentProduct.value = null
     }
-
 
 }

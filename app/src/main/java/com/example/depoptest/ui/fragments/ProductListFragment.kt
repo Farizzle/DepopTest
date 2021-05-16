@@ -3,22 +3,17 @@ package com.example.depoptest.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.RequestManager
 import com.example.depoptest.R
 import com.example.depoptest.adapters.ProductAdapter
-import com.example.depoptest.ui.ProductViewModel
 import com.example.depoptest.util.Resource.Status.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProductListFragment: BaseProductFragment(R.layout.fragment_product_list) {
+class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) {
 
     private lateinit var productAdapter: ProductAdapter
 
@@ -37,11 +32,15 @@ class ProductListFragment: BaseProductFragment(R.layout.fragment_product_list) {
     private fun setupAdapter() {
         productAdapter = ProductAdapter(glide)
         productAdapter.setOnItemClickListener {
-            findNavController().navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it))
+            findNavController().navigate(
+                ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
+                    it
+                )
+            )
         }
     }
 
-    private fun subscribeToObservers(){
+    private fun subscribeToObservers() {
         viewModel.allProducts.observe(viewLifecycleOwner, { products ->
             productAdapter.submitList(products)
         })
@@ -52,7 +51,11 @@ class ProductListFragment: BaseProductFragment(R.layout.fragment_product_list) {
                     SUCCESS -> progressBar.isVisible = false
                     ERROR -> {
                         progressBar.isVisible = false
-                        Snackbar.make(requireView(), result.message ?: "Something went wrong", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            requireView(),
+                            result.message ?: "Something went wrong",
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
@@ -66,5 +69,8 @@ class ProductListFragment: BaseProductFragment(R.layout.fragment_product_list) {
         }
     }
 
-    override fun noInternet() {/**NO-OP*/}
+    override fun noInternet() {
+        /**NO-OP*/
+    }
+
 }

@@ -40,7 +40,7 @@ class ProductAdapter @Inject constructor(
                 user_id.text = product.user_id.toString()
                 product_description.text = product.description
                 setOnClickListener {
-                    onItemClickListener?.let {  click->
+                    onItemClickListener?.let { click ->
                         click(product)
                     }
                 }

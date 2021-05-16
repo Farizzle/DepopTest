@@ -5,9 +5,7 @@ import com.example.depoptest.data.local.ProductDao
 import com.example.depoptest.data.local.model.Product
 import com.example.depoptest.data.remote.DepopAPI
 import com.example.depoptest.data.remote.response.ProductsResponse
-import com.example.depoptest.data.remote.response.model.asDatabaseModel
 import com.example.depoptest.util.Resource
-import java.lang.Exception
 import javax.inject.Inject
 
 class DefaultProductsRepository @Inject constructor(

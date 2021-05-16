@@ -6,7 +6,9 @@ import com.example.depoptest.data.remote.response.ProductsResponse
 import com.example.depoptest.util.Resource
 
 interface ProductsRepository {
+
     suspend fun insertProducts(vararg product: Product)
-    fun getAllProducts() : LiveData<List<Product>>
-    suspend fun getLatestPopularProducts(offsetId: Int) : Resource<ProductsResponse>
+    fun getAllProducts(): LiveData<List<Product>>
+    suspend fun getLatestPopularProducts(offsetId: Int): Resource<ProductsResponse>
+
 }

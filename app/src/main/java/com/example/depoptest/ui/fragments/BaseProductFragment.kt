@@ -14,14 +14,15 @@ abstract class BaseProductFragment(layout: Int) : Fragment(layout) {
     internal val viewModel: ProductViewModel by viewModels()
 
     @Inject
-    lateinit var glide: RequestManager
+    internal lateinit var glide: RequestManager
+
+    abstract fun noInternet()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!hasInternetConnection(requireContext())){
+        if (!hasInternetConnection(requireContext())) {
             noInternet()
         }
     }
 
-    abstract fun noInternet()
 }

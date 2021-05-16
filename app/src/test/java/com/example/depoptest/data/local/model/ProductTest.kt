@@ -40,7 +40,8 @@ class ProductTest {
         val inputCurrencyString = "GBP"
         val inputCurrencyValue = 10.00f
         val outputCurrencySymbol = "£"
-        val editedProduct = product.copy(price_amount = inputCurrencyValue, price_currency = inputCurrencyString)
+        val editedProduct =
+            product.copy(price_amount = inputCurrencyValue, price_currency = inputCurrencyString)
         val expectedProductCostString = "$outputCurrencySymbol${inputCurrencyValue}"
         Truth.assertThat(editedProduct.productCost).isEqualTo(expectedProductCostString)
     }
@@ -50,9 +51,13 @@ class ProductTest {
         val inputCurrencyString = "USD"
         val inputCurrencyValue = 10.00f
         val outputCurrencySymbol = "$"
-        val editedProduct = product.copy(international_shipping_cost = inputCurrencyValue.toString(), price_currency = inputCurrencyString)
+        val editedProduct = product.copy(
+            international_shipping_cost = inputCurrencyValue.toString(),
+            price_currency = inputCurrencyString
+        )
         val expectedProductCostString = "$outputCurrencySymbol${inputCurrencyValue}"
-        Truth.assertThat(editedProduct.internationalShippingCost).isEqualTo(expectedProductCostString)
+        Truth.assertThat(editedProduct.internationalShippingCost)
+            .isEqualTo(expectedProductCostString)
     }
 
     @Test
@@ -60,11 +65,13 @@ class ProductTest {
         val inputCurrencyString = "EUR"
         val inputCurrencyValue = 10.00f
         val outputCurrencySymbol = "€"
-        val editedProduct = product.copy(national_shipping_cost = inputCurrencyValue.toString(), price_currency = inputCurrencyString)
+        val editedProduct = product.copy(
+            national_shipping_cost = inputCurrencyValue.toString(),
+            price_currency = inputCurrencyString
+        )
         val expectedProductCostString = "$outputCurrencySymbol${inputCurrencyValue}"
         Truth.assertThat(editedProduct.nationalShippingCost).isEqualTo(expectedProductCostString)
     }
-
 
 
 }

@@ -50,21 +50,22 @@ class ProductViewModelTest {
     }
 
     @Test
-    fun `valid network fetch for latest products provides success, returns true`() = runBlockingTest {
-        viewModel = ProductViewModel(FakeProductRepository(shouldReturnNetworkError = false))
-        viewModel.getLatestProducts()
-        val value = viewModel.productsStatus.getOrAwaitValueTest()
-        assertThat(value.getContentIfNotHandled()!!.status).isEqualTo(Resource.Status.SUCCESS)
-    }
+    fun `valid network fetch for latest products provides success, returns true`() =
+        runBlockingTest {
+            viewModel = ProductViewModel(FakeProductRepository(shouldReturnNetworkError = false))
+            viewModel.getLatestProducts()
+            val value = viewModel.productsStatus.getOrAwaitValueTest()
+            assertThat(value.getContentIfNotHandled()!!.status).isEqualTo(Resource.Status.SUCCESS)
+        }
 
     @Test
-    fun `invalid network fetch for latest products provides error, returns true`() = runBlockingTest {
-        viewModel = ProductViewModel(FakeProductRepository(shouldReturnNetworkError = true))
-        viewModel.getLatestProducts()
-        val value = viewModel.productsStatus.getOrAwaitValueTest()
-        assertThat(value.getContentIfNotHandled()!!.status).isEqualTo(Resource.Status.ERROR)
-    }
-
+    fun `invalid network fetch for latest products provides error, returns true`() =
+        runBlockingTest {
+            viewModel = ProductViewModel(FakeProductRepository(shouldReturnNetworkError = true))
+            viewModel.getLatestProducts()
+            val value = viewModel.productsStatus.getOrAwaitValueTest()
+            assertThat(value.getContentIfNotHandled()!!.status).isEqualTo(Resource.Status.ERROR)
+        }
 
 
 }

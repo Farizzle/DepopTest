@@ -10,6 +10,6 @@ interface DepopAPI {
     @GET("v1/products/popular/")
     suspend fun getPopularProducts(
         @Query("offset_id") offsetId: Int
-    ) : Response<ProductsResponse>
+    ): Response<ProductsResponse>
 
 }

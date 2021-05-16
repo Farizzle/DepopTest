@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_detail) {
 
@@ -48,7 +47,8 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
         viewModel.currentProduct.observe(viewLifecycleOwner, { product ->
             product?.let { safeProduct ->
                 lifecycleScope.launch {
-                    val delayDuration = requireContext().resources.getInteger(R.integer.transition_duration) + 100
+                    val delayDuration =
+                        requireContext().resources.getInteger(R.integer.transition_duration) + 100
                     delay(delayDuration.toLong())
                     configureProductDetails(safeProduct)
                     productImagesAdapter.submitList(safeProduct.pictures_data)
@@ -88,8 +88,12 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
     private fun setupRecyclerView() {
         rvProductImages.apply {
             adapter = productImagesAdapter
-            val linearLayoutManager = object : LinearLayoutManager(requireContext(), HORIZONTAL, false)
-            { override fun canScrollHorizontally(): Boolean { return hasInternet } }
+            val linearLayoutManager =
+                object : LinearLayoutManager(requireContext(), HORIZONTAL, false) {
+                    override fun canScrollHorizontally(): Boolean {
+                        return hasInternet
+                    }
+                }
             layoutManager = linearLayoutManager
         }
         val snapHelper: SnapHelper = PagerSnapHelper()
@@ -105,7 +109,5 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
     override fun noInternet() {
         hasInternet = false
     }
-
-
 
 }

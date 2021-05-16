@@ -18,8 +18,8 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:label=""
-        android:name="com.example.depoptest.ui.fragments.ProductDetailFragment">
+        android:name="com.example.depoptest.ui.fragments.ProductDetailFragment"
+        android:label="">
         <argument
             android:name="product"
             app:argType="com.example.depoptest.data.local.model.Product" />

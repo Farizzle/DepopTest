@@ -10,23 +10,23 @@ class Converters {
     val gson = Gson()
 
     @TypeConverter
-    fun categoriesToString(categories: List<Int?>?) : String {
+    fun categoriesToString(categories: List<Int?>?): String {
         return gson.toJson(categories)
     }
 
     @TypeConverter
-    fun jsonToCategories(json: String) : List<Int?>? {
+    fun jsonToCategories(json: String): List<Int?>? {
         val categoriesType = object : TypeToken<List<Int?>?>() {}.type
         return gson.fromJson(json, categoriesType)
     }
 
     @TypeConverter
-    fun picturesDataToString(picturesData: List<PicturesData?>) : String {
+    fun picturesDataToString(picturesData: List<PicturesData?>): String {
         return gson.toJson(picturesData)
     }
 
     @TypeConverter
-    fun jsonToPicturesData(json: String) : List<PicturesData?> {
+    fun jsonToPicturesData(json: String): List<PicturesData?> {
         val picturesDataType = object : TypeToken<List<PicturesData?>?>() {}.type
         return gson.fromJson(json, picturesDataType)
     }

@@ -13,7 +13,7 @@ class FakeProductRepository(private val shouldReturnNetworkError: Boolean) : Pro
 
     private val observableProducts = MutableLiveData<List<Product>>(products)
 
-    private fun refreshLiveData(){
+    private fun refreshLiveData() {
         observableProducts.postValue(products)
     }
 
@@ -30,14 +30,16 @@ class FakeProductRepository(private val shouldReturnNetworkError: Boolean) : Pro
         return if (shouldReturnNetworkError) {
             Resource.error("Network error")
         } else {
-            Resource.success(ProductsResponse(
-                Meta(
-                    true,
-                    "fake_offset_id",
-                    10
-                ),
-                listOf()
-            ))
+            Resource.success(
+                ProductsResponse(
+                    Meta(
+                        true,
+                        "fake_offset_id",
+                        10
+                    ),
+                    listOf()
+                )
+            )
         }
     }
 
