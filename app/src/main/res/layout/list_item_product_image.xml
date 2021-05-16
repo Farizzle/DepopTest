@@ -7,6 +7,6 @@
         android:id="@+id/product_image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="480dp"/>
+        android:layout_height="400dp"/>
 
 </LinearLayout>

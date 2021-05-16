@@ -11,25 +11,52 @@
         app:layout_constraintBottom_toTopOf="@id/buy_banner"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProductImages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+            <RelativeLayout
+                android:id="@+id/recycler_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/no_internet_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:alpha="0"
+                    app:cardBackgroundColor="@color/yellow"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Oops! Check your internet!" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </RelativeLayout>
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/product_details_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/recycler_view_container"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/user_id"
@@ -74,9 +101,9 @@
                 <TextView
                     android:id="@+id/hand_delivery_title"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/additional_info_title"
+                    android:layout_marginTop="4dp"
                     android:text="Available for hand delivery"
                     android:textSize="17sp" />
 
@@ -127,16 +154,16 @@
                     tools:text="£10" />
 
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/buy_banner"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
@@ -164,10 +191,10 @@
             android:fontFamily="@font/roboto_bold"
             android:paddingStart="40dp"
             android:paddingTop="4dp"
-            android:textAllCaps="false"
             android:paddingEnd="40dp"
             android:paddingBottom="4dp"
             android:text="Buy"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp" />
     </RelativeLayout>

@@ -17,6 +17,7 @@ import com.example.depoptest.data.remote.response.model.asDatabaseModel
 import com.example.depoptest.repositories.ProductsRepository
 import com.example.depoptest.util.Event
 import com.example.depoptest.util.Resource
+import com.example.depoptest.util.hasInternetConnection
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -52,7 +53,7 @@ class ProductViewModel @ViewModelInject constructor(
     private suspend fun safeLatestProductsCall(offsetId: Int) {
         _productsStatus.value = Event(Resource.loading(null))
         try {
-            if (hasInternetConnection()){
+            if (hasInternetConnection(app)){
                 val response = repository.getLatestPopularProducts(offsetId)
                 response.data?.let { safeResponse ->
                     saveProducts(*safeResponse.objects.asDatabaseModel())
@@ -76,32 +77,6 @@ class ProductViewModel @ViewModelInject constructor(
 
     fun removeCurrentProduct(){
         _currentProduct.value = null
-    }
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager =
-            app?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val activeNetwork = connectivityManager.activeNetwork ?: return false
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-            return when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
-        } else {
-            connectivityManager.activeNetworkInfo?.run {
-                return when (type) {
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
-                    else -> false
-                }
-            }
-        }
-        return false
     }
 
 

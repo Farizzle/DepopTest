@@ -59,7 +59,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideGlideInstance(@ApplicationContext app: Context) =
-        Glide.with(app).setDefaultRequestOptions(
+        Glide.with(app)
+            .setDefaultRequestOptions(
             RequestOptions()
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_placeholder)

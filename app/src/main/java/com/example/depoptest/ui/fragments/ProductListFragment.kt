@@ -18,13 +18,9 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProductListFragment: Fragment(R.layout.fragment_product_list) {
+class ProductListFragment: BaseProductFragment(R.layout.fragment_product_list) {
 
-    private val viewModel: ProductViewModel by viewModels()
     private lateinit var productAdapter: ProductAdapter
-
-    @Inject
-    lateinit var glide: RequestManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,4 +65,6 @@ class ProductListFragment: Fragment(R.layout.fragment_product_list) {
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
+
+    override fun noInternet() {/**NO-OP*/}
 }

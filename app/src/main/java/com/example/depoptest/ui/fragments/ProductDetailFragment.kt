@@ -4,30 +4,26 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.RequestManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.example.depoptest.R
 import com.example.depoptest.adapters.ProductImagesAdapter
 import com.example.depoptest.data.local.model.Product
-import com.example.depoptest.ui.ProductViewModel
+import com.example.depoptest.util.extensions.getValueAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+
 
 @AndroidEntryPoint
-class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
-
-    private val viewModel: ProductViewModel by viewModels()
+class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_detail) {
 
     private lateinit var productImagesAdapter: ProductImagesAdapter
 
-    @Inject
-    lateinit var glide: RequestManager
+    private var hasInternet = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +52,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
                     delay(delayDuration.toLong())
                     configureProductDetails(safeProduct)
                     productImagesAdapter.submitList(safeProduct.pictures_data)
+                    if (!hasInternet) showNoInternetCard()
                 }
             }
         })
@@ -91,10 +88,24 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
     private fun setupRecyclerView() {
         rvProductImages.apply {
             adapter = productImagesAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            val linearLayoutManager = object : LinearLayoutManager(requireContext(), HORIZONTAL, false)
+            { override fun canScrollHorizontally(): Boolean { return hasInternet } }
+            layoutManager = linearLayoutManager
         }
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rvProductImages)
     }
+
+    private fun showNoInternetCard() {
+        getValueAnimator(hasInternet) {
+            no_internet_container.alpha = it
+        }.start()
+    }
+
+    override fun noInternet() {
+        hasInternet = false
+    }
+
 
 
 }

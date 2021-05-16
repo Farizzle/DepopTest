@@ -36,6 +36,7 @@ class ProductAdapter @Inject constructor(
         fun bind(product: Product) {
             itemView.apply {
                 glide.load(product.smallThumbNail).into(product_image)
+                glide.load(product.largeThumbnail).downloadOnly(1280, 1280)
                 user_id.text = product.user_id.toString()
                 product_description.text = product.description
                 setOnClickListener {

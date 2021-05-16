@@ -30,6 +30,8 @@ data class Product(
 
     val smallThumbNail: String
         get() = pictures_data.first().smallThumbnail
+    val largeThumbnail: String
+        get() = pictures_data.first().largeThumbnail
 
     val productCost: String
         get() = when (price_currency) {

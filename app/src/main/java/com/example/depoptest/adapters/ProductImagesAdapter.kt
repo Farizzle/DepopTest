@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.depoptest.R
 import com.example.depoptest.data.remote.response.model.PicturesData
 import kotlinx.android.synthetic.main.list_item_product.view.*
@@ -18,7 +20,8 @@ class ProductImagesAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductImagesViewHolder {
         return ProductImagesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_product_image, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.list_item_product_image, parent, false)
         )
     }
 
@@ -30,7 +33,8 @@ class ProductImagesAdapter @Inject constructor(
         fun bind(picturesData: PicturesData) {
             itemView.apply {
                 val productImage = picturesData.largeThumbnail
-                glide.load(productImage).into(product_image)
+                glide.load(productImage).apply(RequestOptions().override(1024, 1024))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(product_image)
             }
         }
     }
