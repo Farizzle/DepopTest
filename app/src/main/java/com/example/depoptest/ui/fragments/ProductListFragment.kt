@@ -31,10 +31,10 @@ class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) 
 
     private fun setupAdapter() {
         productAdapter = ProductAdapter(glide)
-        productAdapter.setOnItemClickListener {
+        productAdapter.setOnItemClickListener { product ->
             findNavController().navigate(
                 ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
-                    it
+                    product
                 )
             )
         }
@@ -43,6 +43,7 @@ class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) 
     private fun subscribeToObservers() {
         viewModel.allProducts.observe(viewLifecycleOwner, { products ->
             productAdapter.submitList(products)
+            configureErrorState()
         })
         viewModel.productsStatus.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let { result ->
@@ -51,11 +52,6 @@ class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) 
                     SUCCESS -> progressBar.isVisible = false
                     ERROR -> {
                         progressBar.isVisible = false
-                        Snackbar.make(
-                            requireView(),
-                            result.message ?: "Something went wrong",
-                            Snackbar.LENGTH_LONG
-                        ).show()
                     }
                 }
             }
@@ -69,8 +65,19 @@ class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) 
         }
     }
 
+    private fun configureErrorState() {
+        if (productAdapter.currentList.isEmpty() && !hasInternet) {
+            error_state.visibility = View.VISIBLE
+        }
+    }
+
     override fun noInternet() {
-        /**NO-OP*/
+        hasInternet = false
+        Snackbar.make(
+            requireView(),
+            "No internet connection",
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
 }

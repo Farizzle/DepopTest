@@ -22,8 +22,6 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
 
     private lateinit var productImagesAdapter: ProductImagesAdapter
 
-    private var hasInternet = true
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchCurrentProductAndUpdate()

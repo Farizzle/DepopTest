@@ -12,6 +12,7 @@ import javax.inject.Inject
 abstract class BaseProductFragment(layout: Int) : Fragment(layout) {
 
     internal val viewModel: ProductViewModel by viewModels()
+    internal var hasInternet = true
 
     @Inject
     internal lateinit var glide: RequestManager
