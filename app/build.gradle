@@ -17,7 +17,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.depoptest.HiltTestRunner"
     }
 
     buildTypes {
@@ -61,7 +61,7 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
@@ -84,7 +84,7 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$dagger_androidx_version"
     kapt "androidx.hilt:hilt-compiler:$dagger_androidx_version"
 
-    // Tests
+    // Local Unit Test
     implementation "androidx.test:core:$androidx_version"
     testImplementation "junit:junit:$test_junit_version"
     testImplementation "org.hamcrest:hamcrest-all:$test_hamcrest_version"
@@ -93,5 +93,16 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$test_coroutines_core_version"
     testImplementation "com.google.truth:truth:$test_truth_version"
     testImplementation "org.mockito:mockito-core:$test_mockito_version"
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
 
+    // Instrumented Unit Test
+    androidTestImplementation "junit:junit:$test_junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$test_junit_ext_version"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$test_mockito_dexmaker_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$test_coroutines_core_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$test_androidx_core_version"
+    androidTestImplementation "com.google.truth:truth:$test_truth_version"
+    androidTestImplementation "org.mockito:mockito-core:$test_mockito_version"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$dagger_hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
 }
