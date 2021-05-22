@@ -17,6 +17,10 @@ class DefaultProductsRepository @Inject constructor(
         dao.upsert(*product)
     }
 
+    override suspend fun favouriteProduct(product: Product) {
+        dao.upsert(product)
+    }
+
     override fun getAllProducts(): LiveData<List<Product>> = dao.getAllProducts()
 
     override suspend fun getLatestPopularProducts(offsetId: Int): Resource<ProductsResponse> {

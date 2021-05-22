@@ -13,7 +13,7 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(vararg product: Product)
 
-    @Query("SELECT * FROM product")
+    @Query("SELECT * FROM product WHERE (isFavourite == 0)")
     fun getAllProducts(): LiveData<List<Product>>
 
 }

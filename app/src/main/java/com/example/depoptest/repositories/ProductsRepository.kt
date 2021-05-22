@@ -10,5 +10,6 @@ interface ProductsRepository {
     suspend fun insertProducts(vararg product: Product)
     fun getAllProducts(): LiveData<List<Product>>
     suspend fun getLatestPopularProducts(offsetId: Int): Resource<ProductsResponse>
+    suspend fun favouriteProduct(product: Product)
 
 }

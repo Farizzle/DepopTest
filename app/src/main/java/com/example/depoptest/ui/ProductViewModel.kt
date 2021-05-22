@@ -34,6 +34,10 @@ class ProductViewModel @ViewModelInject constructor(
     val currentProduct: LiveData<Product?>
         get() = _currentProduct
 
+    private var _isFavourite = MutableLiveData<Boolean>()
+    val isFavourite: LiveData<Boolean>
+        get() = _isFavourite
+
     init {
         getLatestProducts()
     }
@@ -44,6 +48,13 @@ class ProductViewModel @ViewModelInject constructor(
 
     fun getLatestProducts(offsetId: Int = 0) = viewModelScope.launch {
         safeLatestProductsCall(offsetId)
+    }
+
+    fun favouriteProductPressed(isFavourited: Boolean) = viewModelScope.launch {
+        currentProduct.value?.let { safeProduct ->
+            _isFavourite.postValue(isFavourited)
+            repository.favouriteProduct(safeProduct.copy(isFavourite = isFavourited))
+        }
     }
 
     private suspend fun safeLatestProductsCall(offsetId: Int) {

@@ -26,6 +26,7 @@ data class Product(
     val purchase_via_paypal: Boolean,
     val status: String,
     val user_id: Int,
+    val isFavourite: Boolean? = false
 ) : Serializable {
 
     val smallThumbNail: String

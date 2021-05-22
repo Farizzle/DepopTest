@@ -2,6 +2,9 @@ package com.example.depoptest.ui.fragments
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +27,7 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         fetchCurrentProductAndUpdate()
         setupAdapter()
         subscribeToObservers()
@@ -106,6 +110,35 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
 
     override fun noInternet() {
         hasInternet = false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.products_details_menu, menu)
+        val favouritesItem = menu.findItem(R.id.favourite_product)
+        viewModel.isFavourite.observe(viewLifecycleOwner, { isFavourite ->
+            if (isFavourite) {
+                favouritesItem.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favourited)
+            } else {
+                favouritesItem.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_non_favourite)
+            }
+            favouritesItem.isChecked = isFavourite
+        })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.favourite_product -> {
+                item.isChecked = !item.isChecked
+                if (item.isChecked) {
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favourited)
+                } else {
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_non_favourite)
+                }
+                viewModel.favouriteProductPressed(item.isChecked)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
