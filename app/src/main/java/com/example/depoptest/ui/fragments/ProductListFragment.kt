@@ -51,6 +51,13 @@ class ProductListFragment : BaseProductFragment(R.layout.fragment_product_list) 
                     LOADING -> progressBar.isVisible = true
                     SUCCESS -> progressBar.isVisible = false
                     ERROR -> {
+                        if (hasInternet) {
+                            Snackbar.make(
+                                requireView(),
+                                "Oops! Something went wrong",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
                         progressBar.isVisible = false
                     }
                 }
