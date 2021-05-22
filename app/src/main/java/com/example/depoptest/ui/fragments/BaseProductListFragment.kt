@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-open class BaseProductListFragment(layout: Int) : BaseProductFragment(layout) {
+abstract class BaseProductListFragment(layout: Int) : BaseProductFragment(layout) {
 
     @Inject
     internal lateinit var productsAdapter: ProductAdapter
