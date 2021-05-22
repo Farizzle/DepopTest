@@ -15,6 +15,7 @@ import com.example.depoptest.R
 import com.example.depoptest.adapters.ProductImagesAdapter
 import com.example.depoptest.data.local.model.Product
 import com.example.depoptest.util.extensions.getValueAnimator
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.coroutines.delay
@@ -28,6 +29,7 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        hideBottomNavMenu()
         fetchCurrentProductAndUpdate()
         setupAdapter()
         subscribeToObservers()
@@ -106,6 +108,13 @@ class ProductDetailFragment : BaseProductFragment(R.layout.fragment_product_deta
         getValueAnimator(hasInternet) {
             no_internet_container.alpha = it
         }.start()
+    }
+
+    private fun hideBottomNavMenu(){
+        val navBar = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        navBar?.let {
+            it.visibility = View.GONE
+        }
     }
 
     override fun noInternet() {

@@ -24,4 +24,12 @@
             android:name="product"
             app:argType="com.example.depoptest.data.local.model.Product" />
     </fragment>
+    <fragment
+        android:id="@+id/productFavouriteListFragment"
+        android:name="com.example.depoptest.ui.fragments.ProductFavouriteListFragment"
+        android:label="Favourites" >
+        <action
+            android:id="@+id/action_productFavouriteListFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
 </navigation>

@@ -3,8 +3,10 @@ package com.example.depoptest.di
 import android.content.Context
 import androidx.room.Room
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.depoptest.R
+import com.example.depoptest.adapters.ProductAdapter
 import com.example.depoptest.data.local.ProductDao
 import com.example.depoptest.data.local.ProductDatabase
 import com.example.depoptest.data.remote.DepopAPI
@@ -63,5 +65,9 @@ object AppModule {
                     .placeholder(R.drawable.ic_placeholder)
                     .error(R.drawable.ic_placeholder)
             )
+
+    @Provides
+    fun provideProductsAdapter(glide: RequestManager) =
+        ProductAdapter(glide)
 
 }

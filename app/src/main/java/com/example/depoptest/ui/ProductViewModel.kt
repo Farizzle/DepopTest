@@ -25,6 +25,7 @@ class ProductViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(app) {
 
     val allProducts = repository.getAllProducts()
+    val favouriteProducts = repository.getFavouriteProducts()
 
     private val _productsStatus = MutableLiveData<ProductsEvent>()
     val productsStatus: LiveData<ProductsEvent>
@@ -80,6 +81,7 @@ class ProductViewModel @ViewModelInject constructor(
 
     fun assignCurrentProduct(product: Product) {
         _currentProduct.value = product
+        _isFavourite.postValue(product.isFavourite)
     }
 
     fun removeCurrentProduct() {

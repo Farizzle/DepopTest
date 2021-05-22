@@ -66,7 +66,7 @@ class ProductDaoTest {
             user_id = 15
         )
         dao.upsert(product)
-        val allProducts = dao.getAllProducts().getOrAwaitValue()
+        val allProducts = dao.getAllProducts(false).getOrAwaitValue()
         assertThat(allProducts).contains(product)
     }
 
@@ -94,7 +94,7 @@ class ProductDaoTest {
         )
         dao.upsert(product)
         dao.upsert(product.copy(price_currency = "USD"))
-        val allProducts = dao.getAllProducts().getOrAwaitValue()
+        val allProducts = dao.getAllProducts(false).getOrAwaitValue()
         assertThat(allProducts.first().price_currency).isEqualTo("USD")
     }
 
