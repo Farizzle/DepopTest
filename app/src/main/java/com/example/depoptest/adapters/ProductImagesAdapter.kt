@@ -33,7 +33,7 @@ class ProductImagesAdapter @Inject constructor(
         fun bind(picturesData: PicturesData) {
             itemView.apply {
                 val productImage = picturesData.largeThumbnail
-                glide.load(productImage).apply(RequestOptions().override(1024, 1024))
+                glide.load(productImage).apply(RequestOptions().override(1280, 1280))
                     .diskCacheStrategy(DiskCacheStrategy.ALL).into(product_image)
             }
         }
